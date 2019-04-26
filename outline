@@ -5,7 +5,188 @@
 --------------------------------------
 # JAVA基础篇
 1.语言基础与流程控制
+  1.1 语言基础
+	  1.1.1 基本数据类型
+	          整型(byte,short,int,long)
+	             内存空间占用的字节数与位数
+	             long型变量声明的规则
+	          浮点型(float,double)
+	             内存空间占用的字节数与位数
+	             float型变量声明的规则
+	          字符型(char)
+	             内存空间占用的字节数与位数
+	             char型与int型的强制转换
+	          布尔型(boolean)
+	             布尔类型初期化默认值
+	  1.1.2 变量与常量
+	          变量和常量的命名
+	  1.1.3 运算符
+	          算术运算符(++,--,+,-,*,/,%,=,())
+	             ++i和i++的区别
+	          比较运算符(>,<,==,>=,<=,!=)
+	             ==和===的区别
+	          逻辑运算符(&&,&,||,|,!)
+	             &&和&的区别
+	          位运算符(&,|,^,<<,>>,>>>)
+	             通过按位异或对两个整数进行交换
+	          三目运算符
+	             表达式 ? 返回值1:返回值2
+	          运算符的优先级
+	  1.1.4 类型转换
+	          自动类型转换(隐式转换)
+	             基本类型之间可以自动转换
+	          强制类型转换
+	             int i = (int) 1.2f;
+	             布尔类型不能被转换为其它类型
+  1.2 流程控制
+      1.2.1 条件语句
+              if(){} else{}
+              if(){} else if(){} 
+      1.2.2 开关语句(key的值可以是整型,字符型,字符串,枚举类型)
+              switch(key){
+                case : break;
+                default: break;
+              }
+      1.2.3 循环语句
+              while(){}
+              do{} while();
+              for(;;){}
+              for(:){}
+      1.2.4 跳转语句
+              break;
+              continue;
+              return;
 2.一般常用基础方法
+  2.1 数组
+      2.1.1 一维数组(数组类型可以为基础类型和非基础类型)
+              int[] arr = new int[5];
+              int arr[] = new int[5];
+              int[] arr = {1,2,3,4,5};
+      2.1.2 多维数组(明白多维数组与一维数组的关系,一维数组与多维数组占用内存的比较,Runtime)
+              int[][] arr = new int[5][6];
+              int arr[][]= new int[5][6];
+              int[][] arr = new int[5][];
+              arr[0] = new int[5];
+              arr[1] = new int[6];
+              int[][] arr = {{1,2},{3,4,5}};
+      2.1.3 Arrays类的常用静态方法
+              填充方法(有多个重载方法，可以返回一个被填充后的新数组)
+                Arrays.fill(arr,val);
+                Arrays.fill(arr,fromIndex,toIndex,val);
+              排序方法(有多个重载方法，可以返回一个升序排列后的数组)
+                Arrays.sort(arr);
+                Arrays.sort(arr,fromIndex,toIndex);
+                Arrays.parallelSort(arr) 多线程排序，较稳定
+                Arrays.parallelSort(arr,fromIndex,toIndex);
+              复制方法(有多个重载方法，可以返回一个被复制长度为newLength的新数组)
+                Arrays.copyOf(arr,newLength);
+                Arrays.copyOfRange(arr,from,to);
+              查找指定key在数组中的index值(有多个重载方法,可以返回需要指定查找的值在数组中的位置)
+                Arrays.binarySearch(a,key);(通过二分法实现，前提数组是有序数组)
+              比较方法(有多个重载方法,返回布尔值)
+                Arrays.equals(a,b);
+  2.1 字符串(String类与基本类型的区别)
+      2.1.1 字符串的创建方式
+              String str = "";(与基本类型一样的创建方式)
+              String str = new String();(与类对象一样的创建方式)
+                String类具有多个重载的构造函数，可以将字节数组,字符数组,字符串以及字符串缓冲类实例和字符串创建实例转换为字符串对象
+                String str = new String(byte[] b);
+                String str = new String(char[] c);
+                String str = new String(String s);
+                String str = new String(StringBuffer sb);
+                String str = new String(StringBuilder sb);
+      2.1.2 字符串的常用操作
+              字符串的连接(追加)
+                String str = "" + "";('+'操作符会将被操作对象隐式转换为String类型)
+              字符串长度的获取
+                int len = str.length();
+              获取指定位置的字符
+                char c = str.charAt(int index);
+              获取指定字符串的位置
+                int index = str.indexOf(String subStr);
+                int lastIndex = str.lastIndexOf(string subStr);
+              去除字符串空格
+                String str = str.trim(); // 去除首尾空格
+                String str = str.replaceAll(String regex,String replacement); //将字符串中所有的的regex替换成replacement，当str=“ ”,replacement=""时,去掉全部空格
+                StringTokenizer类，通过分割和追加的方式，去除全部空格(与split功能方法类似)
+                  StringTokenizer st = new StringTokenizer(String str," ");
+                  while(st.hasMoreTokens){
+                  	str = str + st.nextToken();
+                  }
+              字符串的替换
+                String str = str.replace(String regex,String replacement); //将字符串中的str替换成replacement
+                String str = str.replaceFrist(String regex,String replacement); //将字符串中第一个出现的的regex替换成replacement
+              字符串的判断
+                判断字符串是否相等
+                  boolean b = str.equals(String oStr); // 值相等的判断
+                  boolean b = str.equalsIgnoreCase(String oStr); // 忽略大小写判断字符串的值是否相等
+                判断字符串大小(所在字典位置的的大小)
+                  int i = str.compareTo(String oStr); // 当前对象比比参数大返回正整数，反之则为负整数，相等则为0
+                  int i = str.compareToIgnoreCase(String oStr); //忽略大小写判断字符串的值
+                判断字符串的开始与结尾
+                  boolean b = str.startsWith(String prefix); // 判断字符串是否以prefix为前缀开始
+                  boolean b = str.endsWith(String suffix); // 判断字符串是否以suffix为后缀结尾
+              字符串的大小写转换(转换时，非字符不受影响)
+                String str = str.toUpperCase(); // 转换为大写
+                String str = str.toLowerCase(); // 转换为小写 
+              字符串的分割
+                String[] str = str.split(String sign); // 根据指定分割符sign把字符串分割为字符串数组,一些特殊符号需要进行转义,比如：\\.
+                String[] str = str.split("[abc]$");  // sign也可以是正则表达式
+                String[] str = str.split(String sign,int limit); // 根据指定分割符sign把字符串分割指定长度limit的字符串数组
+                StringTokenizer类也可以分割字符串
+                 StringTokenizer st = new StringTokenizer(String str ,String sign);
+                 while(st.hasMoreTokens()){
+                   st.nextToken();
+                 }
+              基本类型转换为字符串(String类的静态方法valueOf)
+                String str = String.valueOf(int i); 
+              将字符串转换为字节数组
+                byte[] b = str.getBytes();
+              获取字符串的子串
+                String substr = str.substring(int beginIndex); // 获取从beginIndex位置到结尾的字串
+                String substr = str.substring(int beginIndex,int endIndex) // 获取从begin到end位置的子串
+              空字符串的判断
+                boolean b = str.isEmpty();
+      2.1.2 格式化字符串(String类的静态方法format)
+              String str = String.format(String format,Obejct...args);
+              format:格式化转换符,也可以是包含格式化转换符的字符串
+              args:可选参数，格式化说明符引用的参数
+              String str = String.format("abc%s%s","d","e"); // str = "abcde";
+              String str = String.format(Local l,String format,Obejct...args);
+              l:格式化后的字符串要应用的语言环境，l=null时，则不进行本地化
+              格式化转换符
+                日期格式化转换符
+                 %te,%tb,%tB,%tA,%ta,%tc,%tY,%tj,%tm,%td,%ty
+                 String str = String.format(Local.US,"%tb",new Date());
+                时间格式化转换符
+                 %tH,%tI,%tk,%tl,%tM,%tS,%tL,%tN,%tp,%tz,%tZ,%ts,%tQ
+                 String str = String.format("%tH",new Date());
+                日期和时间混合格式化转换符
+                 %tF,%tD,%tc,%tr,%tT,%tR
+                常规格式转换符
+                 %b,%B,%h,%H,%s,%S,%c,%C,%d,%o,%x,%X,%e,%a,%n,%%
+                 b,B:boolean
+                 h,H:hashCode
+                 s,S:String
+                 c,C:char
+                 d:十进制
+                 o:八进制
+                 x,X:十六进制
+                 e:科学技术法
+                 %:%
+      2.1.3 正则表达式
+              boolean b = str.matches(String regex); // regex 正则表达式
+      2.1.4 字符串生成器与缓存器(与String类的相比，对于频繁大量的字符串操作，效率更高,作为参数时为引用传递类型)
+              字符串生成器StringBuilder类(创建一个初始长度为16个字符的对象，可以自动曾长)
+                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder(String str);
+                常用方法
+                  追加 sb.append(String str); // 多个重载方法，实现多类型的追加 StringBuffer对象也可以追加
+                  插入 sb.insert(int offset,String str); // offset插入的位置
+                  删除 sb.delete(int start,int end); // start删除的起始位置，end删除的终止位置
+                  转换 sb.toString() // 返回一个String类型对象
+              *字符串缓存器StringBuffer类，实际上StringBuilder类是它的简易替换，在单线程使用时StringBuilder类更快速
+              多线程使用时StringBuffer类更安全。           
 # JAVA技术篇
 1.类的特性
   1.接口
@@ -14,7 +195,7 @@
   4.高级特性
     1.抽象类
     2.内部类
-    3.Class类和JAVA反射(*)
+    3.Class类和JAVA反射与泛型(*)
 2.集合类
   1.集合类接口的特性和使用
   2.集合类具体实现类的特性和使用
@@ -30,11 +211,178 @@
   5.ZIP压缩输入/输出流
 # JAVA高级篇
 5.多线程(*)
-  1.实现线程的两种方式
-  2.线程的生命周期
-  3.线程的常用方法
-  4.线程的优先级
-  5.线程间的同步和通信
+  1.概念
+    1.1 CPU时间片轮转机制
+    1.2 并行
+    1.3 并发
+  2.实现线程的三种方式
+    2.1 继承Thread类，覆写run方法
+            public class NewThread extends Thread{}
+    2.2 实现Runable接口，实现run方法
+            public class NewThread implment Runable{}
+    2.3 实现Callable接口，实现call方法
+            public class NewThread implment Callable<obejct>{}
+    2.4 三种实现方式的优缺点  
+        2.4.1 java中不可以进行多继承的操作，因此当新类需要继承其它类时，这种实现方式不可行
+        2.4.2 实现接口的方式，可以使类更加多样化，可以实现其他接口和继承其他类
+        2.4.3 实现Callable接口时，调用get方法会阻塞主线程，当线程结束后返回线程的返回值
+  3.线程的生命周期
+    2.1 创建
+        new Thread();
+    2.2 就绪
+        new Thread().start();
+    2.3 运行
+        正在执行run方法
+    2.4 阻塞
+        由于某些原因造成线程停止运行，进入到阻塞状态，以下方法可以造成阻塞
+        sleep();线程休眠
+        wait();线程等待，通过notify()或者notifyAll()可以唤醒线程
+    2.5 死亡
+        自然死亡：run方法运行结束
+        异常死亡：调用stop方法结束线程
+  4.线程的常用方法
+    void run()
+    void start()
+    static void sleep(long t)
+    final void wait()
+    final void notify()/final void notifyAll
+    static void yied()
+    守护线程与非守护线程
+  5.线程的优先级
+  6.线程间的安全
+    6.1 隐式锁(线程同步锁synchronized)
+        6.1.1 修饰在方法上
+              public synchronized void name(){}相当与synchronized(this){}
+        6.1.2 修饰在代码块上
+              ...
+              synchronized(object){
+              ...
+              }
+              ...
+              object:对象锁，具有相同对象锁的线程是互斥的，并且object越小，对于线程而言，效率越高，
+                       一般常把byte[] lock = new byte[1];作为对象锁
+              效率：一般synchronized(object)方式效率要高于synchronized void name()
+    6.2 显式锁
+        6.2.1 Lock接口
+              Lock是一个接口，提供了无条件的，可轮寻的，定时的，可中断的锁获取操作，所有加锁解锁的方式都是显式的
+              public abstract interface Lock{
+                     public abstract void lock(); // 获取锁，如果锁不可用，则阻塞当前线程
+                     public abstract void lockInterruptibly() throws InterruptedException;
+                     public abstract boolean tryLock();
+                     public abstract boolean tryLock(long paramLong,TimeUnit paramTimeUnit) throws InterruptedException;
+                     public abstract void unlock(); // 释放锁，对应lock，lockInterruptibly和tryLock方法
+                     public abstract Condition newCondition(); // 返回与次Lock实例一起使用的Condition实例
+              }
+              Lock与synchronized的比较
+                 1. Lock使用起来更灵活，但必须手动获取锁和释放锁，而synchronized不需要手动进行锁的释放和开启
+                 2. Lock只适合代码块锁，synchronized对象之间是互斥关系。
+        6.2.2 ReentrantLock类
+              ReentrantLock类是Lock接口的实现类之一，是一个互斥的同步器，效率上比synchronized要高
+              ...
+              private final ReentrantLock lock = new ReentrantLock();
+              ...
+              public void m(){
+				lock.lock();
+				try{
+				    ...
+				} finally{
+				    lock.unlock();
+				}             
+              }
+        6.2.3 ReadWriteLock接口
+              ReadWriteLock接口提供了readLock和writeLock两种锁的机制，也就是一个资源能够被多个读线程访问，或者一个写线程访问，但不能同时读写.
+              ReadWriteLock接口并不是Lock的子接口，只是借助Lock来实现读写两个锁的并存，互斥的操作机制
+              public interface ReadWriteLock{
+                 Lock readLock();
+                 Lock writeLock();
+              }
+        6.2.4 ReentrantReadWriteLock类
+              ReentrantReadWriteLock类是ReadWriteLock接口的唯一实现类，主要应用于有很多线程都从某个数据结构中读取数据，而很少线程的修改数据时，允许读操作是线程共享访问的，写操作依然必须是互斥的。
+              ReentrantReadWriteLock类的实现里面有几个特性，如下
+              公平性
+              重入性
+              锁降级
+              锁升级
+              锁获取中断
+              条件变量
+              重入数
+              概括起来就是     
+              读-读不互斥，读-写互斥，写-写互斥
+        6.2.5 StampedLock类(?)
+              悲观锁
+              乐观锁
+        6.2.6 volatile关键字(易变的，不稳定的)
+              用volatile修饰的变量在读取和写入时不需要加锁
+              每次读取volatile变量时都要从内存地址中读取，volatile只提供内存可见性没有提供原子性，适用于多个线程读取，只有一个线程修改的场合
+              public volatile static int count = 0;
+              加锁机制与volatile的区别：加锁机制既可以保持数据的内存可见性又确保原子性，而volatile只提供数据的内存可见性。
+              加锁机制与volatile的相同点：都保证了在多线程中数据的同步与安全
+        6.2.7 原子操作(atomic)
+              原子操作是不会阻塞线程的，是加强版的volatile原子操作，包含了一些常用的原子处理类，主要用于高并发环境下高效的程序处理
+              基本类型：AtomicInteger,AtomicLong,AtomicBoolean
+              引用类型：AtomicReference
+              数组类型：AtomicIntegerArray,AtomicLongArray,AtomicReferenceArray
+              属性原子修改器：AtomicInergerFieldUpdater,AtomicLongFieldUpdater,AtomicReferenceFieldUpdater
+              例：AtomicInerger的常用方法
+                 public final int get(); // 获取当前值
+                 public final int getAndSet(int newValue); // 获取当前值，并设置新的值
+                 public final int getAndIncrement(); // 获取当前值并自增
+                 public final int getAndDecrement(); // 获取当前值并自减
+                 public final int getAndAdd(int delta); // 获取当前值并加上预期值
+        6.2.8 单例模式的四种实现方法
+              1.线程不安全的
+                 class Singleton{
+                   private static Singleton instance;
+                   private Singleton(){}
+                   public static Singleton getInstance(){
+                     if(instance == null){
+                         instance = new Singleton();
+                     }
+                     return instance;
+                   }
+                 }
+              2.线程安全，高并发性能不高的  
+                 class Singleton{
+                   private static Singleton instance;
+                   private Singleton(){}
+                   public static synchronized Singleton getInstance(){
+                     if(instance == null){
+                         instance = new Singleton();
+                     }
+                     return instance;
+                   }
+                 }
+              3.线程安全，性能又高的
+                 class Singleton{
+                   private static Singleton instance;
+                   private static byte[] lock = new byte[1];
+                   private Singleton(){}
+                   public static Singleton getInstance(){
+                     if(instance == null){
+                         synchronized(lock){
+                           instance = new Singleton();
+                         }
+                     }
+                     return instance;
+                   }
+                 }
+              4.线程安全，性能又高的   
+                 class Singleton{
+                   private static Singleton instance;
+                   private static ReentrantLock lock = new ReentrantLock();
+                   private Singleton(){}
+                   public static Singleton getInstance(){
+                     if(instance == null){
+                         lock.lock();
+                         instance = new Singleton();
+                         lock.unlock();
+                     }
+                     return instance;
+                   }
+                 }                         
+  7.线程间的交互--线程阀(阻塞队列BlockingQueue)
+  8.线程池
+  9.多线程的实际应用
 6.网络通信(*)
   1.网络程序设计概念
   2.网络程序设计基础
